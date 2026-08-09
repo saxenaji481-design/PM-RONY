@@ -7,8 +7,1125 @@
     <meta name="description" content="PM RONNY - Indian Gamer, Free Fire, PC & Mobile Games, Hindi Commentary" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* ==========================================
+           ALL CSS (Full Styling)
+           ========================================== */
+
+        /* ----- RESET ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #08080f;
+            color: #e0e0ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ----- PRELOADER ----- */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #08080f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top: 3px solid #0ff;
+            border-right: 3px solid #a855f7;
+            animation: spin 1s linear infinite;
+            position: absolute;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            border-top: 3px solid #a855f7;
+            border-right: 3px solid #0ff;
+            animation-duration: 1.5s;
+            animation-direction: reverse;
+        }
+
+        .loader-ring:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            border-top: 3px solid #0ff;
+            border-right: 3px solid #a855f7;
+            animation-duration: 2s;
+        }
+
+        .loader-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0ff;
+            letter-spacing: 4px;
+            margin-top: 70px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ----- PARTICLES CANVAS ----- */
+        #particlesCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ----- FLOATING ORBS ----- */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            top: -15%;
+            right: -10%;
+            background: rgba(0, 255, 255, 0.05);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -15%;
+            left: -10%;
+            background: rgba(168, 85, 247, 0.04);
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 100, 255, 0.03);
+            animation-duration: 28s;
+            animation-delay: -10s;
+        }
+
+        .orb-4 {
+            width: 300px;
+            height: 300px;
+            top: 20%;
+            right: 20%;
+            background: rgba(255, 0, 100, 0.03);
+            animation-duration: 18s;
+            animation-delay: -15s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(60px, -80px) scale(1.3); }
+            66% { transform: translate(-50px, 60px) scale(0.8); }
+            100% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* ----- NAVIGATION ----- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
+            background: rgba(8, 8, 15, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(8, 8, 15, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .logo-icon {
+            font-size: 1.6rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #0ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #8892b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0ff, #a855f7);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-toggle span {
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ----- SECTIONS ----- */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #0ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-line {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #0ff, #a855f7);
+            margin: 0.8rem auto;
+            border-radius: 10px;
+        }
+
+        .section-subtitle {
+            color: #8892b0;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ----- HOME SECTION ----- */
+        .home-section {
+            padding-top: 8rem;
+            padding-bottom: 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-card {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(10, 10, 22, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 48px;
+            padding: 3rem 3.5rem;
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 80px rgba(0, 255, 255, 0.03), inset 0 0 80px rgba(0, 255, 255, 0.01);
+            transition: all 0.5s ease;
+        }
+
+        .main-card:hover {
+            box-shadow: 0 50px 130px rgba(0, 0, 0, 0.8), 0 0 120px rgba(0, 255, 255, 0.05), inset 0 0 100px rgba(0, 255, 255, 0.02);
+        }
+
+        .card-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), transparent, rgba(168, 85, 247, 0.1));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+            animation: glowPulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0ff, #a855f7, #0ff);
+            padding: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            animation: avatarGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes avatarGlow {
+            0% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.15); }
+            100% { box-shadow: 0 0 80px rgba(0, 255, 255, 0.35), 0 0 120px rgba(168, 85, 247, 0.15); }
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #141425, #07070e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            border-right: 2px solid rgba(168, 85, 247, 0.3);
+            animation: ringSpin 3s linear infinite;
+        }
+
+        @keyframes ringSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .title-group h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 40%, #c084fc 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #0ff;
+            background: rgba(0, 255, 255, 0.06);
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-secondary {
+            color: #c084fc;
+            border-color: rgba(168, 85, 247, 0.15);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        /* Description */
+        .desc {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(0, 255, 255, 0.02);
+            border-radius: 24px;
+            padding: 1.5rem 2rem;
+            border-left: 3px solid rgba(0, 255, 255, 0.15);
+            margin: 1.5rem 0 2rem;
+        }
+
+        .desc-icon {
+            font-size: 2rem;
+            color: #0ff;
+            opacity: 0.3;
+            flex-shrink: 0;
+        }
+
+        .desc-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #c8d0e8;
+            margin-bottom: 0.3rem;
+        }
+
+        .desc-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .desc-content .highlight {
+            color: #0ff;
+            font-weight: 500;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.08);
+        }
+
+        .flag-text .flag {
+            margin-right: 4px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(0, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.04);
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(0, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #0ff;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #5a6488;
+        }
+
+        .stat-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f0f4ff;
+        }
+
+        .stat-value .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #0f0;
+            border-radius: 50%;
+            margin-left: 6px;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.9rem 2.5rem;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.08), rgba(168, 85, 247, 0.08));
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(168, 85, 247, 0.15));
+            border-color: rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.08);
+        }
+
+        .cta-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* ----- ABOUT SECTION ----- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background: rgba(10, 10, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-icon {
+            font-size: 2.5rem;
+            color: #0ff;
+            margin-bottom: 1rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .about-card p {
+            color: #9aa4c8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .about-card p strong {
+            color: #fff;
+        }
+
+        .bio-card {
+            background: rgba(10, 10, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .bio-card:hover {
+            border-color: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .bio-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .bio-card h3 i {
+            color: #0ff;
+            margin-right: 0.6rem;
+        }
+
+        .bio-card p {
+            color: #c8d0e8;
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+
+        .bio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+        }
+
+        .bio-tags span {
+            background: rgba(0, 255, 255, 0.04);
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #8892b0;
+            transition: all 0.3s ease;
+        }
+
+        .bio-tags span:hover {
+            background: rgba(0, 255, 255, 0.08);
+            color: #0ff;
+            border-color: rgba(0, 255, 255, 0.1);
+        }
+
+        /* ----- LINKS SECTION ----- */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(10, 10, 22, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            text-decoration: none;
+            color: #c8d0e8;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            background: rgba(0, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.04);
+        }
+
+        .link-card-info {
+            flex: 1;
+        }
+
+        .link-card-info h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.1rem;
+        }
+
+        .link-card-info p {
+            font-size: 0.8rem;
+            color: #5a6488;
+        }
+
+        .link-card-arrow {
+            font-size: 1.2rem;
+            color: #5a6488;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover .link-card-arrow {
+            color: #0ff;
+            transform: translateX(5px);
+        }
+
+        .link-card.youtube .link-card-icon { color: #ff0033; border-color: rgba(255, 0, 51, 0.1); }
+        .link-card.youtube:hover { border-color: rgba(255, 0, 51, 0.15); }
+        .link-card.kick .link-card-icon { color: #00ff66; border-color: rgba(0, 255, 102, 0.1); }
+        .link-card.kick:hover { border-color: rgba(0, 255, 102, 0.15); }
+        .link-card.discord .link-card-icon { color: #5865f2; border-color: rgba(88, 101, 242, 0.1); }
+        .link-card.discord:hover { border-color: rgba(88, 101, 242, 0.15); }
+        .link-card.instagram .link-card-icon { color: #e1306c; border-color: rgba(225, 48, 108, 0.1); }
+        .link-card.instagram:hover { border-color: rgba(225, 48, 108, 0.15); }
+        .link-card.video .link-card-icon { color: #ffcc00; border-color: rgba(255, 204, 0, 0.1); }
+        .link-card.video:hover { border-color: rgba(255, 204, 0, 0.15); }
+
+        /* ----- CONTACT SECTION ----- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: rgba(10, 10, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 2.5rem;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-icon-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(168, 85, 247, 0.05));
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #0ff;
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: #8892b0;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #b0c0f0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            background: rgba(0, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .contact-email:hover {
+            color: #0ff;
+            border-color: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.04);
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            background: rgba(0, 255, 255, 0.04);
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            color: #8892b0;
+            font-size: 0.85rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 255, 255, 0.08);
+            color: #0ff;
+            border-color: rgba(0, 255, 255, 0.1);
+        }
+
+        .contact-social {
+            background: rgba(10, 10, 22, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 2.5rem;
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-social:hover {
+            border-color: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-social h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+
+        .social-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #8892b0;
+            background: rgba(0, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.04);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.1);
+        }
+
+        .social-icon.youtube:hover { color: #ff0033; background: rgba(255, 0, 51, 0.05); border-color: rgba(255, 0, 51, 0.1); }
+        .social-icon.kick:hover { color: #00ff66; background: rgba(0, 255, 102, 0.05); border-color: rgba(0, 255, 102, 0.1); }
+        .social-icon.discord:hover { color: #5865f2; background: rgba(88, 101, 242, 0.05); border-color: rgba(88, 101, 242, 0.1); }
+        .social-icon.instagram:hover { color: #e1306c; background: rgba(225, 48, 108, 0.05); border-color: rgba(225, 48, 108, 0.1); }
+
+        /* ----- FOOTER ----- */
+        .footer {
+            background: rgba(8, 8, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 255, 255, 0.03);
+            padding: 3rem 2rem 1.5rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: #5a6488;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #8892b0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #0ff;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8892b0;
+            background: rgba(0, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.03);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: #0ff;
+            border-color: rgba(0, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.02);
+            width: 100%;
+        }
+
+        .footer-bottom p {
+            color: #3a4468;
+            font-size: 0.8rem;
+        }
+
+        /* ----- BACK TO TOP ----- */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(10, 10, 22, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            color: #0ff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: rgba(0, 255, 255, 0.05);
+            border-color: rgba(0, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.05);
+        }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 992px) {
+            .main-card { padding: 2.5rem 2rem; }
+            .title-group h1 { font-size: 2.6rem; }
+            .contact-container { grid-template-columns: 1fr; max-width: 500px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(8, 8, 15, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: right 0.4s ease;
+                border-left: 1px solid rgba(0, 255, 255, 0.03);
+            }
+            .nav-menu.active { right: 0; }
+            .nav-toggle { display: flex; z-index: 1001; }
+            .header { flex-direction: column; text-align: center; gap: 1rem; }
+            .title-group h1 { font-size: 2.2rem; }
+            .badge-container { justify-content: center; }
+            .desc { flex-direction: column; text-align: center; padding: 1.2rem 1.5rem; }
+            .desc-icon { display: none; }
+            .stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .stat-item { justify-content: center; }
+            .about-grid { grid-template-columns: 1fr 1fr; }
+            .links-grid { grid-template-columns: 1fr; }
+            .section { padding: 5rem 1.2rem; }
+            .section-title { font-size: 2.2rem; }
+            .home-section { padding-top: 7rem; }
+            .avatar { width: 100px; height: 100px; }
+            .avatar-inner { font-size: 3rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-card { padding: 1.5rem 1.2rem; border-radius: 32px; }
+            .title-group h1 { font-size: 1.8rem; }
+            .stats { grid-template-columns: 1fr; gap: 0.8rem; }
+            .stat-item { justify-content: flex-start; }
+            .about-grid { grid-template-columns: 1fr; }
+            .contact-card { padding: 1.8rem 1.2rem; }
+            .bio-card { padding: 1.5rem; }
+            .bio-card p { font-size: 0.95rem; }
+            .desc-content p { font-size: 0.95rem; }
+            .footer-links { gap: 1rem; }
+            .footer-links a { font-size: 0.75rem; }
+        }
+    </style>
 </head>
+
 <body>
 
     <!-- ===== PRELOADER ===== -->
@@ -21,7 +1138,7 @@
         </div>
     </div>
 
-    <!-- ===== FLOATING PARTICLES ===== -->
+    <!-- ===== PARTICLES CANVAS ===== -->
     <canvas id="particlesCanvas"></canvas>
 
     <!-- ===== FLOATING ORBS ===== -->
@@ -54,12 +1171,11 @@
     <!-- ===== MAIN CONTENT ===== -->
     <main>
 
-        <!-- ===== SECTION: HOME ===== -->
+        <!-- ===== HOME ===== -->
         <section id="home" class="section home-section">
-            <div class="card main-card" id="mainCard">
+            <div class="main-card" id="mainCard">
                 <div class="card-glow"></div>
-                
-                <!-- Header -->
+
                 <div class="header">
                     <div class="avatar-wrapper">
                         <div class="avatar" id="avatar">
@@ -68,41 +1184,24 @@
                         <div class="avatar-ring"></div>
                     </div>
                     <div class="title-group">
-                        <h1 class="glitch-text" data-text="PM RONNY">PM RONNY</h1>
+                        <h1>PM RONNY</h1>
                         <div class="badge-container">
-                            <span class="badge">
-                                <i class="fas fa-gamepad"></i> Fully Indian Gamer
-                            </span>
-                            <span class="badge badge-secondary">
-                                <i class="fas fa-microphone"></i> Hindi Commentary
-                            </span>
+                            <span class="badge"><i class="fas fa-gamepad"></i> Fully Indian Gamer</span>
+                            <span class="badge badge-secondary"><i class="fas fa-microphone"></i> Hindi Commentary</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Description -->
                 <div class="desc">
-                    <div class="desc-icon">
-                        <i class="fas fa-quote-left"></i>
-                    </div>
+                    <div class="desc-icon"><i class="fas fa-quote-left"></i></div>
                     <div class="desc-content">
-                        <p>
-                            <strong>Hi Gamers, I'm RONNY!</strong> Here you will see me playing
-                            <span class="highlight">PC games</span> and
-                            <span class="highlight">Mobile Games</span> having some fun. 🚀
-                        </p>
-                        <p>
-                            I Playing <strong>Free Fire</strong> With You On
-                            <span class="highlight">PM RONNY Channel</span>.
-                        </p>
-                        <p class="flag-text">
-                            <span class="flag">🇮🇳</span> Fully Indian Gamer With <strong>Hindi Commentary</strong>.
-                        </p>
+                        <p><strong>Hi Gamers, I'm RONNY!</strong> Here you will see me playing <span class="highlight">PC games</span> and <span class="highlight">Mobile Games</span> having some fun. 🚀</p>
+                        <p>I Playing <strong>Free Fire</strong> With You On <span class="highlight">PM RONNY Channel</span>.</p>
+                        <p class="flag-text"><span class="flag">🇮🇳</span> Fully Indian Gamer With <strong>Hindi Commentary</strong>.</p>
                     </div>
                 </div>
 
-                <!-- Stats -->
-                <div class="stats">
+                <div class="stats" id="statsContainer">
                     <div class="stat-item">
                         <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
                         <div class="stat-info">
@@ -113,8 +1212,15 @@
                     <div class="stat-item">
                         <div class="stat-icon"><i class="fas fa-eye"></i></div>
                         <div class="stat-info">
-                            <span class="stat-label">Total Views</span>
-                            <span class="stat-value" id="viewsCount">5,04,16,460</span>
+                            <span class="stat-label">Total Views <span class="live-dot"></span></span>
+                            <span class="stat-value" id="viewsCount">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Subscribers <span class="live-dot"></span></span>
+                            <span class="stat-value" id="subsCount">Loading...</span>
                         </div>
                     </div>
                     <div class="stat-item">
@@ -124,16 +1230,8 @@
                             <span class="stat-value">India</span>
                         </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
-                        <div class="stat-info">
-                            <span class="stat-label">Games</span>
-                            <span class="stat-value">Free Fire · PC · Mobile</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- CTA Button -->
                 <div class="cta-section">
                     <a href="#links" class="cta-btn">
                         <span>Explore My Channels</span>
@@ -143,7 +1241,7 @@
             </div>
         </section>
 
-        <!-- ===== SECTION: ABOUT ===== -->
+        <!-- ===== ABOUT ===== -->
         <section id="about" class="section about-section">
             <div class="section-header">
                 <h2 class="section-title">About <span>Me</span></h2>
@@ -154,49 +1252,44 @@
                 <div class="about-card">
                     <div class="about-icon"><i class="fas fa-user-circle"></i></div>
                     <h3>Who I Am</h3>
-                    <p>I'm <strong>RONNY</strong>, a passionate gamer from India who loves playing both PC and Mobile games. I create entertaining content for my fellow gamers.</p>
+                    <p>I'm <strong>RONNY</strong>, a passionate gamer from India who loves playing both PC and Mobile games.</p>
                 </div>
-
                 <div class="about-card">
                     <div class="about-icon"><i class="fas fa-fire"></i></div>
                     <h3>What I Play</h3>
-                    <p>I specialize in <strong>Free Fire</strong> and also play various other PC and Mobile games. My goal is to provide fun and engaging gameplay for my audience.</p>
+                    <p>I specialize in <strong>Free Fire</strong> and also play various other PC and Mobile games.</p>
                 </div>
-
                 <div class="about-card">
                     <div class="about-icon"><i class="fas fa-language"></i></div>
                     <h3>Language</h3>
-                    <p>I do <strong>Hindi Commentary</strong> so that every Indian gamer can understand and enjoy the content without any language barrier.</p>
+                    <p>I do <strong>Hindi Commentary</strong> so that every Indian gamer can understand easily.</p>
                 </div>
-
                 <div class="about-card">
                     <div class="about-icon"><i class="fas fa-heart"></i></div>
                     <h3>My Mission</h3>
-                    <p>To build a strong gaming community where every gamer feels welcome. Let's grow together and have fun playing games! 🎮</p>
+                    <p>To build a strong gaming community where every gamer feels welcome. 🎮</p>
                 </div>
             </div>
 
-            <div class="about-bio">
-                <div class="bio-card">
-                    <h3><i class="fas fa-info-circle"></i> Full Bio</h3>
-                    <p>
-                        <strong>Hi Gamers, I'm RONNY!</strong> Here you will see me playing PC games and Mobile Games having some fun.
-                        I Playing <strong>Free Fire</strong> With You On PM RONNY Channel.
-                        <span class="flag">🇮🇳</span> Fully Indian Gamer With Hindi Commentary.
-                    </p>
-                    <div class="bio-tags">
-                        <span>#Gamer</span>
-                        <span>#FreeFire</span>
-                        <span>#IndianGamer</span>
-                        <span>#HindiCommentary</span>
-                        <span>#PCGames</span>
-                        <span>#MobileGames</span>
-                    </div>
+            <div class="bio-card">
+                <h3><i class="fas fa-info-circle"></i> Full Bio</h3>
+                <p>
+                    <strong>Hi Gamers, I'm RONNY!</strong> Here you will see me playing PC games and Mobile Games having some fun.
+                    I Playing <strong>Free Fire</strong> With You On PM RONNY Channel.
+                    <span class="flag">🇮🇳</span> Fully Indian Gamer With Hindi Commentary.
+                </p>
+                <div class="bio-tags">
+                    <span>#Gamer</span>
+                    <span>#FreeFire</span>
+                    <span>#IndianGamer</span>
+                    <span>#HindiCommentary</span>
+                    <span>#PCGames</span>
+                    <span>#MobileGames</span>
                 </div>
             </div>
         </section>
 
-        <!-- ===== SECTION: LINKS ===== -->
+        <!-- ===== LINKS ===== -->
         <section id="links" class="section links-section">
             <div class="section-header">
                 <h2 class="section-title">My <span>Channels</span></h2>
@@ -205,79 +1298,35 @@
             </div>
 
             <div class="links-grid">
-                <!-- YouTube -->
                 <a href="http://www.youtube.com/@PMRONNY" target="_blank" rel="noopener" class="link-card youtube">
-                    <div class="link-card-icon">
-                        <i class="fab fa-youtube"></i>
-                    </div>
-                    <div class="link-card-info">
-                        <h4>YouTube</h4>
-                        <p>www.youtube.com/@PMRONNY</p>
-                    </div>
-                    <div class="link-card-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <div class="link-card-icon"><i class="fab fa-youtube"></i></div>
+                    <div class="link-card-info"><h4>YouTube</h4><p>www.youtube.com/@PMRONNY</p></div>
+                    <div class="link-card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
-
-                <!-- KICK -->
                 <a href="https://kick.com/pmronny_21" target="_blank" rel="noopener" class="link-card kick">
-                    <div class="link-card-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="link-card-info">
-                        <h4>KICK</h4>
-                        <p>kick.com/pmronny_21</p>
-                    </div>
-                    <div class="link-card-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <div class="link-card-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="link-card-info"><h4>KICK</h4><p>kick.com/pmronny_21</p></div>
+                    <div class="link-card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
-
-                <!-- Discord -->
                 <a href="https://discord.gg/7J7TqK48an" target="_blank" rel="noopener" class="link-card discord">
-                    <div class="link-card-icon">
-                        <i class="fab fa-discord"></i>
-                    </div>
-                    <div class="link-card-info">
-                        <h4>Discord</h4>
-                        <p>discord.gg/7J7TqK48an</p>
-                    </div>
-                    <div class="link-card-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <div class="link-card-icon"><i class="fab fa-discord"></i></div>
+                    <div class="link-card-info"><h4>Discord</h4><p>discord.gg/7J7TqK48an</p></div>
+                    <div class="link-card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
-
-                <!-- Instagram -->
                 <a href="https://instagram.com/pmronny21/?_pwa=1" target="_blank" rel="noopener" class="link-card instagram">
-                    <div class="link-card-icon">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                    <div class="link-card-info">
-                        <h4>Instagram</h4>
-                        <p>@pmronny21</p>
-                    </div>
-                    <div class="link-card-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <div class="link-card-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="link-card-info"><h4>Instagram</h4><p>@pmronny21</p></div>
+                    <div class="link-card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
-
-                <!-- Video Tutorial -->
                 <a href="https://youtu.be/xmeP4FQrZhA" target="_blank" rel="noopener" class="link-card video">
-                    <div class="link-card-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="link-card-info">
-                        <h4>Video Tutorial</h4>
-                        <p>Videos Me kaise Aye</p>
-                    </div>
-                    <div class="link-card-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <div class="link-card-icon"><i class="fas fa-video"></i></div>
+                    <div class="link-card-info"><h4>Video Tutorial</h4><p>Videos Me kaise Aye</p></div>
+                    <div class="link-card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
             </div>
         </section>
 
-        <!-- ===== SECTION: CONTACT ===== -->
+        <!-- ===== CONTACT ===== -->
         <section id="contact" class="section contact-section">
             <div class="section-header">
                 <h2 class="section-title">Contact <span>Me</span></h2>
@@ -288,15 +1337,12 @@
             <div class="contact-container">
                 <div class="contact-card">
                     <div class="contact-icon-wrapper">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     </div>
                     <h3>Business Email</h3>
                     <p>For collaborations, sponsorships, and business inquiries</p>
                     <a href="mailto:mihulkumar1461@gmail.com" class="contact-email">
-                        <i class="fas fa-envelope"></i>
-                        mihulkumar1461@gmail.com
+                        <i class="fas fa-envelope"></i> mihulkumar1461@gmail.com
                     </a>
                     <button class="copy-btn" onclick="copyEmail()">
                         <i class="fas fa-copy"></i> Copy Email
@@ -306,18 +1352,10 @@
                 <div class="contact-social">
                     <h3>Follow Me</h3>
                     <div class="social-icons">
-                        <a href="http://www.youtube.com/@PMRONNY" target="_blank" class="social-icon youtube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a href="https://kick.com/pmronny_21" target="_blank" class="social-icon kick">
-                            <i class="fas fa-bolt"></i>
-                        </a>
-                        <a href="https://discord.gg/7J7TqK48an" target="_blank" class="social-icon discord">
-                            <i class="fab fa-discord"></i>
-                        </a>
-                        <a href="https://instagram.com/pmronny21/?_pwa=1" target="_blank" class="social-icon instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="http://www.youtube.com/@PMRONNY" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://kick.com/pmronny_21" target="_blank" class="social-icon kick"><i class="fas fa-bolt"></i></a>
+                        <a href="https://discord.gg/7J7TqK48an" target="_blank" class="social-icon discord"><i class="fab fa-discord"></i></a>
+                        <a href="https://instagram.com/pmronny21/?_pwa=1" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -355,6 +1393,314 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="script.js"></script>
+    <script>
+        // ==========================================
+        // ALL JAVASCRIPT
+        // ==========================================
+
+        (function() {
+            'use strict';
+
+            // ----- PRELOADER -----
+            window.addEventListener('load', function() {
+                const preloader = document.getElementById('preloader');
+                setTimeout(() => {
+                    preloader.classList.add('hide');
+                }, 1200);
+            });
+
+            // ----- PARTICLES -----
+            const canvas = document.getElementById('particlesCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleCount = 80;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.opacity = Math.random() * 0.4 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function connectParticles() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 180) {
+                            const opacity = (1 - dist / 180) * 0.15;
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(0, 255, 255, ${opacity})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update();
+                    p.draw(); });
+                connectParticles();
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // ----- NAVIGATION -----
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                const sections = document.querySelectorAll('.section, .home-section');
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 200;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // ----- TILT EFFECT -----
+            const card = document.getElementById('mainCard');
+            let isMobile = window.innerWidth < 768;
+
+            function handleTilt(e) {
+                if (isMobile) return;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                const rotateX = y * -4;
+                const rotateY = x * 4;
+                card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                card.style.transition = 'transform 0.06s linear';
+            }
+
+            function resetTilt() {
+                if (isMobile) return;
+                card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+            }
+
+            if (!isMobile) {
+                card.addEventListener('mousemove', handleTilt);
+                card.addEventListener('mouseleave', resetTilt);
+            }
+
+            window.addEventListener('resize', () => {
+                const wasMobile = isMobile;
+                isMobile = window.innerWidth < 768;
+                if (isMobile && !wasMobile) {
+                    card.style.transform = 'none';
+                    card.style.transition = 'none';
+                    card.removeEventListener('mousemove', handleTilt);
+                    card.removeEventListener('mouseleave', resetTilt);
+                } else if (!isMobile && wasMobile) {
+                    card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                    card.addEventListener('mousemove', handleTilt);
+                    card.addEventListener('mouseleave', resetTilt);
+                }
+            });
+
+            // ----- AVATAR EASTER EGG -----
+            const avatar = document.getElementById('avatar');
+            let clickCount = 0;
+            avatar.addEventListener('click', function() {
+                clickCount++;
+                if (clickCount === 3) {
+                    const inner = this.querySelector('.avatar-inner');
+                    const emojis = ['🔥', '⚡', '🎯', '💀', '👾', '🚀', '👽', '🤖', '🎮', '🏆'];
+                    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                    inner.textContent = randomEmoji;
+                    inner.style.transition = 'transform 0.3s ease, font-size 0.3s ease';
+                    inner.style.transform = 'scale(1.4)';
+                    setTimeout(() => {
+                        inner.style.transform = 'scale(1)';
+                    }, 300);
+                    clickCount = 0;
+                    console.log('🎮 Avatar easter egg triggered!');
+                }
+            });
+
+            // ----- REAL-TIME DATA (SocialCounts) - EXACT NUMBERS -----
+            async function fetchYouTubeStats() {
+                const channelHandle = 'pmronny';
+                const viewsEl = document.getElementById('viewsCount');
+                const subsEl = document.getElementById('subsCount');
+
+                // Show loading state
+                viewsEl.textContent = 'Loading...';
+                subsEl.textContent = 'Loading...';
+
+                try {
+                    // Using SocialCounts.org API (free, no API key required)
+                    const response = await fetch(
+                        `https://api.socialcounts.org/youtube/statistics/@${channelHandle}`, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+
+                    if (data && data.data) {
+                        // EXACT VIEWS (no plus, exact number)
+                        const views = parseInt(data.data.views || 0);
+                        viewsEl.textContent = views.toLocaleString('en-IN');
+
+                        // EXACT SUBSCRIBERS (no plus, exact number)
+                        const subs = parseInt(data.data.subscribers || 0);
+                        subsEl.textContent = subs.toLocaleString('en-IN');
+
+                        console.log(`📊 Exact Stats: ${views.toLocaleString('en-IN')} views, ${subs.toLocaleString('en-IN')} subscribers`);
+                    } else {
+                        throw new Error('Invalid data structure');
+                    }
+                } catch (error) {
+                    console.error('❌ Error fetching YouTube stats:', error);
+                    // Fallback - exact numbers without plus
+                    viewsEl.textContent = '5,04,16,460';
+                    subsEl.textContent = '1,09,852';
+                }
+            }
+
+            // Fetch stats immediately
+            fetchYouTubeStats();
+
+            // Refresh every 30 seconds (real-time feel)
+            setInterval(fetchYouTubeStats, 30000);
+
+            // ----- COPY EMAIL -----
+            window.copyEmail = function() {
+                const email = 'mihulkumar1461@gmail.com';
+                navigator.clipboard.writeText(email).then(() => {
+                    const btn = document.querySelector('.copy-btn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    btn.style.color = '#0ff';
+                    btn.style.borderColor = 'rgba(0, 255, 255, 0.2)';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.color = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                }).catch(() => {
+                    alert('Email: ' + email);
+                });
+            };
+
+            // ----- BACK TO TOP -----
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ----- CONSOLE GREETING -----
+            console.log('%c🎮 PM RONNY · Gaming Hub', 'font-size:20px; font-weight:bold; color:#0ff;');
+            console.log('%c🇮🇳 Fully Indian Gamer | Hindi Commentary', 'font-size:14px; color:#aab;');
+            console.log('%c📧 mihulkumar1461@gmail.com', 'font-size:14px; color:#888;');
+            console.log('%c🚀 Real-Time Exact Stats Active!', 'font-size:14px; color:#0f0;');
+            console.log('✅ PM RONNY website fully loaded!');
+
+            // ----- LINK CLICK TRACKING -----
+            document.querySelectorAll('.link-card, .social-icon, .footer-social a, .cta-btn').forEach(link => {
+                link.addEventListener('click', function() {
+                    const platform = this.classList.contains('youtube') ? 'YouTube' :
+                        this.classList.contains('kick') ? 'KICK' :
+                        this.classList.contains('discord') ? 'Discord' :
+                        this.classList.contains('instagram') ? 'Instagram' :
+                        this.classList.contains('video') ? 'VideoTutorial' :
+                        'Other';
+                    console.log(`🔗 PM RONNY: ${platform} link clicked → ${this.href || '#'}`);
+                });
+            });
+
+        })();
+    </script>
+
 </body>
 </html>
